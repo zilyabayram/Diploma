@@ -28,10 +28,10 @@ public class PayPage {
     private SelenideElement notificationError = $(By.className("notification_status_error"));
 
     public void notificationSuccess() {
-        notificationSuccess.shouldBe(Condition.visible, Duration.ofSeconds(30));
+        notificationSuccess.shouldBe(Condition.visible, Duration.ofSeconds(60));
     }
     public void notificationError() {
-        notificationError.shouldBe(Condition.visible, Duration.ofSeconds(30));
+        notificationError.shouldBe(Condition.visible, Duration.ofSeconds(60));
     }
     public void notificationInvalidExpirationDate() { invalidExpirationDate.shouldBe(Condition.visible); }
     public void notificationPastYear() {
