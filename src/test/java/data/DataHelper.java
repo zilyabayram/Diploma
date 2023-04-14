@@ -77,6 +77,16 @@ public class DataHelper {
         return "4444 4444 4444 444";
     }
 
+    public static String getApprovedStatus() {
+        String status = "APPROVED";
+        return status;
+    }
+
+    public static String getDeclinedStatus() {
+        String status = "DECLINED";
+        return status;
+    }
+
     public static CardPattern generateApprovedCardWithValidInformation() {
         return new CardPattern(approvedCardNumber(), generateMonth(0), generateYear(3), generateCardHolderName(), generateCVV());
     }
@@ -140,5 +150,7 @@ public class DataHelper {
     public static CardPattern generateCardWithIncompleteCardNumber() {
         return new CardPattern (incompleteCardNumber(), generateMonth(0), generateYear(1), generateCardHolderName(), generateCVV());
     }
+
+
 
 }

@@ -1,6 +1,7 @@
 package test;
 
 import com.codeborne.selenide.logevents.SelenideLogger;
+import data.DBHelper;
 import data.DataHelper;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
@@ -8,6 +9,7 @@ import page.MainPage;
 
 import static com.codeborne.selenide.Selenide.open;
 import static data.DBHelper.cleanDataBase;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestCreditPage {
     @BeforeEach
@@ -130,5 +132,28 @@ public class TestCreditPage {
         var cardInfo = DataHelper.generateCardWithRandomNumber();
         payPage.initializeCard(cardInfo);
         payPage.notificationError();
+        var expected = DataHelper.getDeclinedStatus();
+        var actual = DBHelper.getPayCreditStatus();
+        assertEquals(expected, actual);
     }
+
+    @Test
+    void testBuyCreditUsingApprovedCardWithValidInformationAndReturnApprovedStatus() {
+        var payPage = new MainPage().buyCredit();
+        var cardInfo = DataHelper.generateApprovedCardWithValidInformation();
+        payPage.initializeCard(cardInfo);
+        var expected = DataHelper.getApprovedStatus();
+        var actual = DBHelper.getPayCreditStatus();
+        assertEquals(expected, actual);
+    }
+    @Test
+    void testBuyCreditUsingDeclinedCardWithValidInformationAndReturnDeclinedStatus() {
+        var payPage = new MainPage().buyCredit();
+        var cardInfo = DataHelper.generateDeclinedCardWithValidInformation();
+        payPage.initializeCard(cardInfo);
+        var expected = DataHelper.getDeclinedStatus();
+        var actual = DBHelper.getPayCreditStatus();
+        assertEquals(expected, actual);
+    }
+
 }
