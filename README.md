@@ -4,7 +4,7 @@
 
 ### Документация
 
-[План автоматизации](https://github.com/zilyabayram/Diploma/blob/164f793631ef3e85752bc9404bdf0c323c973bd3/docs/Plan.md)
+[План автоматизации](https://github.com/zilyabayram/Diploma/blob/cf13a99f3c1ae557004e7b9aaec979ae774d5621/docs/Plan.md)
 
 ### Начало работы
 * Склонировать данный GitHub репозиторий на свой локальный компьютер;
