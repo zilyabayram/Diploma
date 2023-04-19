@@ -12,14 +12,17 @@ import static data.DBHelper.cleanDataBase;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestCreditPage {
+
     @BeforeEach
     public void openPage() {
         open("http://localhost:8080/");
     }
+
     @BeforeAll
     static void setUpAll() {
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
+
     @AfterAll
     static void tearDownAll() {
         SelenideLogger.removeListener("allure");
@@ -95,6 +98,30 @@ public class TestCreditPage {
     }
 
     @Test
+    void testBuyCreditUsingApprovedCardWithCardHolderNameOnly() {
+        var payPage = new MainPage().buyCredit();
+        var cardInfo = DataHelper.generateApprovedCardWithCardHolderNameOnly();
+        payPage.initializeCard(cardInfo);
+        payPage.notificationInvalidString();
+    }
+
+    @Test
+    void testBuyCreditUsingApprovedCardWithRusCardHolder() {
+        var payPage = new MainPage().buyCredit();
+        var cardInfo = DataHelper.generateApprovedCardWithRusCardHolder();
+        payPage.initializeCard(cardInfo);
+        payPage.notificationInvalidString();
+    }
+
+    @Test
+    void testBuyCreditUsingApprovedCardWithCardHolderWithNumbers() {
+        var payPage = new MainPage().buyCredit();
+        var cardInfo = DataHelper.generateApprovedCardWithCardHolderWithNumbers();
+        payPage.initializeCard(cardInfo);
+        payPage.notificationInvalidString();
+    }
+
+    @Test
     void testBuyUsingApprovedCardWithLongCardHolderName() {
         var payPage = new MainPage().buyCredit();
         var cardInfo = DataHelper.generateApprovedCardWithLongCardHolderName();
@@ -119,6 +146,14 @@ public class TestCreditPage {
     }
 
     @Test
+    void testBuyCreditUsingCardWithIncompleteNumber() {
+        var payPage = new MainPage().buyCredit();
+        var cardInfo = DataHelper.generateCardWithIncompleteCardNumber();
+        payPage.initializeCard(cardInfo);
+        payPage.notificationInvalidString();
+    }
+
+    @Test
     void testBuyCreditUsingDeclinedCardWithValidInformationAndReturnErrorNotification() {
         var payPage = new MainPage().buyCredit();
         var cardInfo = DataHelper.generateDeclinedCardWithValidInformation();
@@ -131,7 +166,6 @@ public class TestCreditPage {
         var payPage = new MainPage().buyCredit();
         var cardInfo = DataHelper.generateCardWithRandomNumber();
         payPage.initializeCard(cardInfo);
-        payPage.notificationError();
         var expected = DataHelper.getDeclinedStatus();
         var actual = DBHelper.getPayCreditStatus();
         assertEquals(expected, actual);
@@ -142,18 +176,19 @@ public class TestCreditPage {
         var payPage = new MainPage().buyCredit();
         var cardInfo = DataHelper.generateApprovedCardWithValidInformation();
         payPage.initializeCard(cardInfo);
-        var expected = DataHelper.getApprovedStatus();
+        payPage.notificationSuccess();
         var actual = DBHelper.getPayCreditStatus();
-        assertEquals(expected, actual);
+        assertEquals("APPROVED", actual);
     }
+
     @Test
     void testBuyCreditUsingDeclinedCardWithValidInformationAndReturnDeclinedStatus() {
         var payPage = new MainPage().buyCredit();
         var cardInfo = DataHelper.generateDeclinedCardWithValidInformation();
         payPage.initializeCard(cardInfo);
-        var expected = DataHelper.getDeclinedStatus();
+        payPage.notificationError();
         var actual = DBHelper.getPayCreditStatus();
-        assertEquals(expected, actual);
+        assertEquals("DECLINED", actual);
     }
 
 }

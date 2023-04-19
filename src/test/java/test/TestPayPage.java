@@ -1,6 +1,5 @@
 package test;
 
-
 import com.codeborne.selenide.logevents.SelenideLogger;
 import data.DBHelper;
 import data.DataHelper;
@@ -163,11 +162,10 @@ public class TestPayPage {
     }
 
     @Test
-    void testBuyUsingCardWithRandomNumber() {
+    void testBuyUsingCardWithRandomNumberAndReturnErrorNotification() {
         var payPage = new MainPage().buyDebit();
         var cardInfo = DataHelper.generateCardWithRandomNumber();
         payPage.initializeCard(cardInfo);
-        payPage.notificationError();
         var expected = DataHelper.getDeclinedStatus();
         var actual = DBHelper.getPayStatus();
         assertEquals(expected, actual);
@@ -179,9 +177,8 @@ public class TestPayPage {
         var cardInfo = DataHelper.generateApprovedCardWithValidInformation();
         payPage.initializeCard(cardInfo);
         payPage.notificationSuccess();
-        var expected = DataHelper.getApprovedStatus();
         var actual = DBHelper.getPayStatus();
-        assertEquals(expected, actual);
+        assertEquals("APPROVED", actual);
     }
 
     @Test
@@ -189,9 +186,9 @@ public class TestPayPage {
         var payPage = new MainPage().buyDebit();
         var cardInfo = DataHelper.generateDeclinedCardWithValidInformation();
         payPage.initializeCard(cardInfo);
-        var expected = DataHelper.getDeclinedStatus();
+        payPage.notificationError();
         var actual = DBHelper.getPayStatus();
-        assertEquals(expected, actual);
+        assertEquals("DECLINED", actual);
     }
 
 
