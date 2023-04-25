@@ -100,7 +100,7 @@ public class DataHelper {
     }
 
     public static CardPattern generateApprovedCardWithInvalidMonth() {
-        return new CardPattern(approvedCardNumber(), generateMonth(12), generateYear(0), generateCardHolderName(), generateCVV());
+        return new CardPattern(approvedCardNumber(), "13", generateYear(0), generateCardHolderName(), generateCVV());
     }
 
     public static CardPattern generateApprovedCardWithMonth00() {
@@ -150,7 +150,5 @@ public class DataHelper {
     public static CardPattern generateCardWithIncompleteCardNumber() {
         return new CardPattern (incompleteCardNumber(), generateMonth(0), generateYear(1), generateCardHolderName(), generateCVV());
     }
-
-
 
 }

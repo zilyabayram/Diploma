@@ -166,9 +166,7 @@ public class TestCreditPage {
         var payPage = new MainPage().buyCredit();
         var cardInfo = DataHelper.generateCardWithRandomNumber();
         payPage.initializeCard(cardInfo);
-        var expected = DataHelper.getDeclinedStatus();
-        var actual = DBHelper.getPayCreditStatus();
-        assertEquals(expected, actual);
+        payPage.notificationError();
     }
 
     @Test
