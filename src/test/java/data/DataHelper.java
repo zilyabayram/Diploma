@@ -104,7 +104,7 @@ public class DataHelper {
     }
 
     public static CardPattern generateApprovedCardWithMonth00() {
-        return new CardPattern(approvedCardNumber(), generateMonth00(), generateYear(0), generateCardHolderName(), generateCVV());
+        return new CardPattern(approvedCardNumber(), generateMonth00(), generateYear(1), generateCardHolderName(), generateCVV());
     }
 
     public static CardPattern generateApprovedCardWithEmptyMonth() {
